@@ -1,0 +1,14 @@
+{% extends 'car/base.html' %}
+{% block title %}
+	{{ title }}
+{% endblock %}
+{% block content %}
+	<div class="features">
+		<h1>Удаление автомобиля</h1>
+		<form method="post">
+            {% csrf_token %}
+            <span>{{ error }}</span>
+		    <button class="btn btn-success" type="submit"> Удаление объявления</button>
+        </form>
+	</div>
+{% endblock %}

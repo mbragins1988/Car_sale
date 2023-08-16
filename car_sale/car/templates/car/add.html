@@ -1,0 +1,21 @@
+{% extends 'car/base.html' %}
+{% block title %}
+      {{ title }}
+{% endblock %}
+{% block content %}
+	<div class="features">
+	      <h1>Добавить автомобиль</h1>
+            <form method="post">
+            {% csrf_token %}
+            {{ form.brand }}<br>
+            {{ form.model }}<br>
+            {{ form.date }}<br>
+            {{ form.price }}<br>
+            {{ form.number_owners }}<br>
+            {{ form.text }}<br>
+            {{ form.photo }}<br>
+            <span>{{ error }}</span>
+            <button class="btn btn-success" type="submit"> Добавить автомобиль</button>
+            </form>
+	</div>
+{% endblock %}

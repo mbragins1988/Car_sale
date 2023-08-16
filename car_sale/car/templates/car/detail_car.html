@@ -1,0 +1,13 @@
+{% extends 'car/base.html' %}
+{% block title %}
+	{{ title }}
+{% endblock %}
+{% block content %}
+	<div class="features">
+		<h1>Автомобиль {{ car.brand }} {{ car.model }}</h1>
+		<p> {{ car.text }} </p>
+		<p> {{ car.photo }} </p>
+		<a href="{% url 'update_car' car.id %}"><button class="btn btn-info">изменить</button></a>
+		<a href="{% url 'delete_car' car.id %}"><button class="btn btn-danger">удалить</button></a>
+	</div>
+{% endblock %}

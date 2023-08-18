@@ -2,6 +2,10 @@ body {
     background: #7f6f6f;
 }
 
+.link {
+    text-decoration: none;
+  }
+
 aside {
     float: left;
     background: #1a1a1a;
@@ -27,9 +31,14 @@ aside .logo {
 
 aside a {
     color: #ffffff;
+    text-decoration: none;
 }
 
-aside ul {list-style: none}
+aside ul a {
+    list-style: none;
+    text-decoration: none;
+}
+
 aside ul li {
     color: #ffffff;
     display: block;

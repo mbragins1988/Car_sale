@@ -11,6 +11,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from car.forms import *
 from car.models import *
 
+menu = [
+    {'title': 'О сайте', 'url_name': 'car:about'},
+    {'title': 'Добавить статьи', 'url_name': 'car:add'},
+    {'title': 'Обратная связь', 'url_name': 'car:contacts'},
+    {'title': 'Войти', 'url_name': 'car:login'}
+    ]
 
 class CarUpdateView(UpdateView):
     model = Car
@@ -38,15 +44,17 @@ def index(request):
     context = {
         'title': 'Объявления',
         'cars': cars,
+        'menu': menu,
     }
-    return render(request, 'car/index.html', context)
+    return render(request, 'car/index.html', context=context)
 
 
 def about(request):
     context = {
-        'title': 'Что такое CarSale'
+        'title': 'Что такое CarSale',
+        'menu': menu,
     }
-    return render(request, 'car/about.html', context)
+    return render(request, 'car/about.html', context=context)
 
 def add(request):
     error = ''
@@ -54,7 +62,7 @@ def add(request):
         form = CarForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect ('home')
+            return redirect ('car:home')
         else:
             error = 'Неправильно введены данные'
     form = CarForm
@@ -62,15 +70,24 @@ def add(request):
         'title': 'Добавление автомобиля',
         'form': form,
         'error': error,
+        'menu': menu,
     }
-    return render(request, 'car/add.html', context)
+    return render(request, 'car/add.html', context=context)
 
 
 def contacts(request):
     context = {
         'title': 'Контакты',
+        'menu': menu,
     }
-    return render(request, 'car/contacts.html', context)
+    return render(request, 'car/contacts.html', context=context)
+
+def login(request):
+    context = {
+        'title': 'Регистрация',
+        'menu': menu,
+    }
+    return render(request, 'register/login.html', context=context)
 
 
 def page_not_found(request, exception):

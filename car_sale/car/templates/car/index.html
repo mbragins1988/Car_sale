@@ -1,23 +1,40 @@
-{% extends 'car/base.html' %}
+{% extends 'base.html' %}
 {% block title %}
 	{{ title }}
 {% endblock %}
 {% block content %}
-	{% if car %}
-		<div class="features">
-			<h1>{{ title }}</h1>
-			{% for car in cars %}
-				<div class="alert alert-warning">
-					<h3>Автомобиль {{ car.brand }} {{ car.model }}</h3>
-					<p> {{ car.text }} </p>
-					<a href="{% url 'detail_car' car.id %}" class="btn btn-warning">Читать</a>
-				</div>
-			{% endfor %}
-		</div>
-	{% else %}
+
 	<div class="features">
 		<h1>{{ title }}</h1>
-		<p>На данный момент нет объявлений</p>
+		{% if cars %}
+			{% for car in cars %}
+					<div class="alert alert-warning">
+					<h3>Автомобиль {{ car.brand }} {{ car.model }}</h3>
+					<p> {{ car.text|linebreaks|truncatewords:50 }} </p>
+					<a href="{% url 'car:detail_car' car:detail_car.pk %}" class="btn btn-warning">Читать</a>
+					</div>
+			{% endfor %}
+		{% else %}
+				На данный момент нет объявлений
+		{% endif %}
 	</div>
-	{% endif %}
+
+
+		{% comment %} <div class="features">
+			<h1>{{ title }}</h1>
+			{% for car in cars %}
+				{% if car %}
+					<div class="alert alert-warning">
+						<h3>Автомобиль {{ car.brand }} {{ car.model }}</h3>
+						<p> {{ car.text }} </p>
+						<a href="{% url 'detail_car' car.id %}" class="btn btn-warning">Читать</a>
+					</div>
+				{% else %}
+				<div class="features">
+					<h1>{{ title }}</h1>
+					<p>На данный момент нет объявлений</p>
+				</div>
+				{% endif %}
+			{% endfor %}
+		</div> {% endcomment %}
 {% endblock %}

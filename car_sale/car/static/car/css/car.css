@@ -21,12 +21,18 @@ aside {
     float: left;
 }
 
-aside .logo {
+aside .logocar {
     font-size: 40px;
     margin-left: 10 px;
     font-weight: bold;
     position: relative;
     top: -5px;
+}
+
+.logo {
+	background: url('../images/car.png') no-repeat 10px;
+	width: 110px;
+	height: 60px;
 }
 
 aside a {
@@ -55,19 +61,32 @@ aside ul li:hover, aside ul a:hover {
 main .features {
     float: left;
     color: #fff;
-    margin-top: 100px;
+    margin-top: 40px;
     text-align: center;
     width: 75%;
 }
 
-main .features h1 {font-size: 50px;}
-main .features p {max-width: 400px; margin: 20px auto}
+main .features h1 {
+    font-size: 50px;
+    margin: 20px auto;
+    text-align: center
+}
+main .features h3 {
+    margin: 20px auto;
+    text-align: center
+}
+
+main .features p {
+    max-width: 4000px;
+    margin: 20px auto;
+    text-align: left
+}
 
 .alert-warning {
     float: left;
     clear: both;
-    width: 400px;
-    margin: 20px 32%;
+    width: 800px;
+    margin: 20px 17%;
     text-align: left;
 }
 
@@ -76,4 +95,69 @@ form {
     width: 500px;
     margin: 20px 27%;
     margin-top: 30px;
+}
+
+#footer{
+	width: auto;
+	height: 30px;
+    color: #ffff;
+	background: #040404d7;
+	margin:auto;
+	clear:both;
+}
+#footer a {
+	text-decoration: underline;
+	color: #ef0909;
+}
+
+img src {
+    font-size: 40px;
+    margin-left: 10 px;
+}
+
+img {max-width: 600px; height: auto;}
+
+img.img-article-left {
+	max-width: 300px;
+	height: auto;
+	float: left;
+	padding: 0 10px 10px 0;
+}
+
+img.img-article-left.thumb {
+	max-width: 150px;
+	height: auto;
+}
+
+.header {
+	background: #3F4137;
+	height: 60px;
+}
+
+ul.mainmenu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 60px;
+	color: #fdb673;
+	font-size: 20px;
+	overflow: hidden;
+}
+ul.mainmenu li {
+	float: left;
+	margin: 18px 40px 0 30px;
+}
+ul.mainmenu li.logo {margin: 0;}
+ul.mainmenu li.last {float: right;}
+
+ul.mainmenu li img {
+	float: right;
+}
+
+ul.mainmenu li a {
+	color: #fdc073;
+	text-decoration: none;
+}
+ul.mainmenu li a:hover {
+	color: #FDA83D;
 }

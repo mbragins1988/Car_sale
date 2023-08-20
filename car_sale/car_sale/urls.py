@@ -5,8 +5,9 @@ from django.conf import settings
 
 
 urlpatterns = [
-    path('car/', include('car.urls')),
     path('admin/', admin.site.urls),
+    path('car/', include('car.urls', namespace='car')),
+    path('forum/', include('forum.urls', namespace='forum')),
 ]
 
 if settings.DEBUG:

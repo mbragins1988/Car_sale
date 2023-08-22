@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Car(models.Model):
@@ -8,12 +9,9 @@ class Car(models.Model):
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
     date = models.IntegerField(
-        max_length=50, null=True,
-        verbose_name='год выпуска автомобиля'
+        null=True, verbose_name='год выпуска автомобиля'
     )
-    price = models.IntegerField(
-        null=True, verbose_name='цена автомобиля'
-    )
+    price = models.IntegerField(null=True, verbose_name='цена автомобиля')
     number_owners = models.IntegerField(
         null=True, blank=True, verbose_name='количество владельцев'
     )
@@ -24,6 +22,20 @@ class Car(models.Model):
         upload_to="photos/%Y/%m/%d/", verbose_name='фото автомобиля',
         blank=True,
     )
+    cat = models.ForeignKey('Category_car', on_delete=models.PROTECT, null=True)
+
+    def get_absolute_url(self):
+        return reverse('car:detail_car', kwargs={'car_id': self.id})
 
     def __str__(self):
         return self.brand
+
+
+class Category_car(models.Model):
+    name = models.CharField(max_length=255, verbose_name='тип автомобиля')
+
+    def get_absolute_url(self):
+        return reverse('car:category', kwargs={'cat_id': self.id})
+
+    def __str__(self):
+        return self.name

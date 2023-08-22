@@ -35,17 +35,43 @@
                     <div class="clear"></div>
         </div>
     {% endblock mainmenu %}
-
+{{ cats }}
 
     <aside>
         <a href="{% url 'car:home' %}" class='logocar'>CarSale</a>
             <ul>
-                <a href="{% url 'car:home' %}"><li><i class="fa-solid fa-car"></i> Главная</li></a>
-                <a href="{% url 'car:about' %}"><li><i class="fa-solid fa-car-side"></i> О сайте</li></a>
+                {% if forum %}
+                    {% if cat_selected == 0 %}
+                        <a><li><i class="selected"></i> Все категории </li></a>
+                    {% else %}
+                        <a href="{% url 'forum:forum' %}"><li><i class="fa-solid fa-car-side"></i> Все категории </li></a>
+                    {% endif %}
+                    {% for cat in cats%}
+                        {% if cat.pk == cat.selected %}
+                            <a ><li><i class="selected"></i> {{ cat.name }} </li></a>
+                        {% else %}
+                            <a href="{{ cat.get_absolute_url }}"><li><i class="fa-solid fa-car-side"></i> {{ cat.name }} </li></a>
+                        {% endif %}
+                    {% endfor %}
+
+                {% elif cars %}
+                    {% if cat_selected == 0 %}
+                        <a><li><i class="selected"></i> Все категории </li></a>
+                    {% else %}
+                        <a href="{% url 'car:home' %}"><li><i class="fa-solid fa-car-side"></i> Все категории </li></a>
+                    {% endif %}
+                    {% for cat in cats%}
+                        {% if cat.pk == cat.selected %}
+                            <a ><li><i class="selected"></i> {{ cat.name }} </li></a>
+                        {% else %}
+                            <a href="{% url 'car:category' cat.pk %}"><li><i class="fa-solid fa-car-side"></i> {{ cat.name }} </li></a>
+                            {% comment %} <a href="{{ cat.get_absolute_url }}"><li><i class="fa-solid fa-car-side"></i> {{ cat_name }} </li></a> {% endcomment %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
                 <a href="{% url 'car:contacts' %}"><li><i class="fa-solid fa-car-side"></i> Контакты</li></a>
-                <a href="{% url 'forum:forum' %}"><li><i class="fa-solid fa-car-side"></i> Форум</li></a>
                 <a href="{% url 'car:add' %}"><li><button class="btn btn-info">Добавить автомобиль</li></a>
-                
+
             </ul>
     </aside>
     <main>

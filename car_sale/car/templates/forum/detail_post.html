@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 	<div class="features">
-		<h1>Автомобиль {{ car.brand }} {{ car.model }}</h1>
+		<h1>Автомобиль {{ car.title }}</h1>
 		<p> {{ car.text }} </p>
 		<p> {{ car.photo }} </p>
 		{% comment %} <a href="{% url 'update_car' car.id %}"><button class="btn btn-info">изменить</button></a>

@@ -3,8 +3,39 @@
 	{{ title }}
 {% endblock %}
 {% block content %}
+
 	<div class="features">
 		<h1>{{ title }}</h1>
-		<p> Forum </p>
+		{% if posts %}
+			{% for post in posts %}
+					<div class="alert alert-warning">
+					<h3>Автомобиль {{ post.title }} </h3>
+					<p> {{ post.text|linebreaks|truncatewords:50 }} </p>
+					{% comment %} <a href='{% url "car:detail_car" car.id %}' class="btn btn-warning">Читать</a> {% endcomment %}
+					<a href="{{ car.get_absolute_url }}" class="btn btn-warning">Читать</a>
+					</div>
+			{% endfor %}
+		{% else %}
+				На данный момент нет постов
+		{% endif %}
 	</div>
+
+
+		{% comment %} <div class="features">
+			<h1>{{ title }}</h1>
+			{% for car in cars %}
+				{% if car %}
+					<div class="alert alert-warning">
+						<h3>Автомобиль {{ car.brand }} {{ car.model }}</h3>
+						<p> {{ car.text }} </p>
+						<a href="{% url 'detail_car' car.id %}" class="btn btn-warning">Читать</a>
+					</div>
+				{% else %}
+				<div class="features">
+					<h1>{{ title }}</h1>
+					<p>На данный момент нет объявлений</p>
+				</div>
+				{% endif %}
+			{% endfor %}
+		</div> {% endcomment %}
 {% endblock %}

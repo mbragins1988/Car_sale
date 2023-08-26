@@ -17,6 +17,7 @@ menu = [
     {'title': 'Форум', 'url_name': 'forum:forum'},
     {'title': 'О сайте', 'url_name': 'car:about'},
     {'title': 'Обратная связь', 'url_name': 'car:contacts'},
+    {'title': 'Контакты', 'url_name': 'car:contacts'},
     {'title': 'Войти', 'url_name': 'car:login'},
     ]
 
@@ -29,7 +30,7 @@ menu = [
 
 
 def detail_car(request, car_id):
-    car = Car.objects.get(pk=car_id)
+    car = get_object_or_404(Car, pk=car_id)
     context = {
         'title': 'объявление',
         'menu': menu,
@@ -58,6 +59,7 @@ def index(request):
         'cars': cars,
         'menu': menu,
         'cats': cats,
+        'cat_selected': 0
     }
     return render(request, 'car/index.html', context=context)
 
@@ -103,14 +105,16 @@ def login(request):
     return render(request, 'register/login.html', context=context)
 
 def category(request, cat_id):
-    cat = Category_car.objects.get(id=cat_id)
+    cats = Category_car.objects.all()
+    cars=Car.objects.filter(cat=cat_id)
     context = {
         'title': 'Категории',
         'menu': menu,
-        'cat': cat,
+        'cats': cats,
+        'cars': cars,
+        'cat_selected': cat_id,
     }
-    return HttpResponse(f'Категория объявление {cat_id}')
-    # return render(request, 'car/home.html', context=context)
+    return render(request, 'car/index.html', context=context)
 
 def page_not_found(request, exception):
     return render(request, 'errors/404.html', {'path': request.path}, status=404)

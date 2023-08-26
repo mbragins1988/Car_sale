@@ -35,20 +35,20 @@
                     <div class="clear"></div>
         </div>
     {% endblock mainmenu %}
-{{ cats }}
+
 
     <aside>
         <a href="{% url 'car:home' %}" class='logocar'>CarSale</a>
             <ul>
-                {% if forum %}
+                {% if posts %}
                     {% if cat_selected == 0 %}
-                        <a><li><i class="selected"></i> Все категории </li></a>
+                        <a><li><span class="selected"> Все категории </span></li></a>
                     {% else %}
                         <a href="{% url 'forum:forum' %}"><li><i class="fa-solid fa-car-side"></i> Все категории </li></a>
                     {% endif %}
                     {% for cat in cats%}
-                        {% if cat.pk == cat.selected %}
-                            <a ><li><i class="selected"></i> {{ cat.name }} </li></a>
+                        {% if cat.id == cat_selected %}
+                            <a ><li><span class="selected"> {{ cat.name }} </span></li></a>
                         {% else %}
                             <a href="{{ cat.get_absolute_url }}"><li><i class="fa-solid fa-car-side"></i> {{ cat.name }} </li></a>
                         {% endif %}
@@ -56,22 +56,19 @@
 
                 {% elif cars %}
                     {% if cat_selected == 0 %}
-                        <a><li><i class="selected"></i> Все категории </li></a>
+                        <a><li><span class="selected"> Все категории </span></li></a>
                     {% else %}
                         <a href="{% url 'car:home' %}"><li><i class="fa-solid fa-car-side"></i> Все категории </li></a>
                     {% endif %}
                     {% for cat in cats%}
-                        {% if cat.pk == cat.selected %}
-                            <a ><li><i class="selected"></i> {{ cat.name }} </li></a>
+                        {% if cat.id == cat_selected %}
+                            <a ><li><span class="selected"></i> {{ cat.name }} </li></a>
                         {% else %}
-                            <a href="{% url 'car:category' cat.pk %}"><li><i class="fa-solid fa-car-side"></i> {{ cat.name }} </li></a>
-                            {% comment %} <a href="{{ cat.get_absolute_url }}"><li><i class="fa-solid fa-car-side"></i> {{ cat_name }} </li></a> {% endcomment %}
+                            <a href="{{ cat.get_absolute_url }}"><li><i class="fa-solid fa-car-side"></i> {{ cat.name }} </li></a>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
-                <a href="{% url 'car:contacts' %}"><li><i class="fa-solid fa-car-side"></i> Контакты</li></a>
                 <a href="{% url 'car:add' %}"><li><button class="btn btn-info">Добавить автомобиль</li></a>
-
             </ul>
     </aside>
     <main>

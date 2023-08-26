@@ -9,10 +9,12 @@
 		{% if posts %}
 			{% for post in posts %}
 					<div class="alert alert-warning">
-					<h3>Автомобиль {{ post.title }} </h3>
+						<p class "first">Категория: {{ post.cat }}</p>
+						<p class "last">Дата: {{ post.time_update|date:'d-m-Y' }}</p>
+					<h3>{{ post.title }} </h3>
 					<p> {{ post.text|linebreaks|truncatewords:50 }} </p>
-					{% comment %} <a href='{% url "car:detail_car" car.id %}' class="btn btn-warning">Читать</a> {% endcomment %}
-					<a href="{{ car.get_absolute_url }}" class="btn btn-warning">Читать</a>
+					<a href="{% url 'forum:post_detail' post.id %}" class="btn btn-warning">Читать</a>
+					{% comment %} <a href="{{ post.get_absolute_url post.id}}" class="btn btn-warning">Читать</a> {% endcomment %}
 					</div>
 			{% endfor %}
 		{% else %}

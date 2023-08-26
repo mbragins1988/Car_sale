@@ -9,6 +9,7 @@
 		{% if cars %}
 			{% for car in cars %}
 					<div class="alert alert-warning">
+					<p class "first">Дата объявления: {{ car.time_create|date:'d-m-Y' }}</p>
 					<h3>Автомобиль {{ car.brand }} {{ car.model }}</h3>
 					<p> {{ car.text|linebreaks|truncatewords:50 }} </p>
 					{% comment %} <a href='{% url "car:detail_car" car.id %}' class="btn btn-warning">Читать</a> {% endcomment %}

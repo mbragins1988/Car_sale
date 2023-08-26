@@ -52,6 +52,11 @@ aside ul li {
     transition: transform .5s ease;
 }
 
+.selected {
+    color: #6161c3;
+    font-size: 1.2rem;
+}
+
 aside ul li:hover, aside ul a:hover {
     color: #6161c3;
     text-decoration: none;
@@ -88,6 +93,21 @@ main .features p {
     width: 800px;
     margin: 20px 17%;
     text-align: left;
+}
+
+div.alert alert-warning p.first {
+    margin: 0;
+    float: left;
+}
+
+div.alert alert-warning p.last {
+    margin: 0;
+    float: right;
+}
+
+div.alert alert-warning p.last {
+    margin: 0;
+    float: right;
 }
 
 form {

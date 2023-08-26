@@ -12,7 +12,12 @@ class Forum(models.Model):
     time_create = models.DateTimeField(auto_now_add=True, null=True)
     time_update = models.DateTimeField(auto_now=True, null=True)
     is_published = models.BooleanField(default=True)
-    cat = models.ForeignKey('Category_forum', on_delete=models.PROTECT, null=True)
+    cat = models.ForeignKey(
+        'Category_forum', on_delete=models.PROTECT, null=True
+    )
+
+    def get_absolute_url(self):
+        return reverse('forum:post_detail', kwargs={'post_id': self.id})
     
     def __str__(self):
         return self.title

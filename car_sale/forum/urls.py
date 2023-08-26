@@ -6,6 +6,6 @@ app_name = 'forum'
 
 urlpatterns = [
     path('', forum, name='forum'),
-    path('<int:cat_id>', category, name='category'),
-    path('<int:post_id>', post_detail, name='post_detail'),
+    path('/category/<int:cat_id>', category, name='category'),
+    path('/post/<int:post_id>', post_detail, name='post_detail'),
 ]

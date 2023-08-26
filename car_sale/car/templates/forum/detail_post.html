@@ -4,9 +4,9 @@
 {% endblock %}
 {% block content %}
 	<div class="features">
-		<h1>Автомобиль {{ car.title }}</h1>
-		<p> {{ car.text }} </p>
-		<p> {{ car.photo }} </p>
+		<h1>{{ post.title }}</h1>
+		<p> {{ post.text }} </p>
+		<p> {{ post.photo }} </p>
 		{% comment %} <a href="{% url 'update_car' car.id %}"><button class="btn btn-info">изменить</button></a>
 		<a href="{% url 'delete_car' car.id %}"><button class="btn btn-danger">удалить</button></a> {% endcomment %}
 	</div>

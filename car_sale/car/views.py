@@ -53,12 +53,10 @@ def detail_car(request, car_id):
 
 def index(request):
     cars = Car.objects.all()
-    cats = Category_car.objects.all()
     context = {
         'title': 'Объявления',
         'cars': cars,
         'menu': menu,
-        'cats': cats,
         'cat_selected': 0
     }
     return render(request, 'car/index.html', context=context)
@@ -105,12 +103,10 @@ def login(request):
     return render(request, 'register/login.html', context=context)
 
 def category(request, cat_id):
-    cats = Category_car.objects.all()
     cars=Car.objects.filter(cat=cat_id)
     context = {
         'title': 'Категории',
         'menu': menu,
-        'cats': cats,
         'cars': cars,
         'cat_selected': cat_id,
     }

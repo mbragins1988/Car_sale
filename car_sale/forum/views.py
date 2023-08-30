@@ -13,12 +13,10 @@ from forum.models import *
 
 def forum(request):
     posts = Forum.objects.all()
-    cats = Category_forum.objects.all()
     context = {
         'title': 'Форум сообщества Car sale',
         'menu': menu,
         'posts': posts,
-        'cats': cats,
         'cat_selected': 0,
     }
     return render(request, 'forum/forum.html', context)
@@ -26,23 +24,19 @@ def forum(request):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Forum, pk=post_id)
-    cats = Category_forum.objects.all()
     context = {
         'title': 'Форум',
         'menu': menu,
         'post': post,
-        'cats': cats,
     }
     return render(request, 'forum/detail_post.html', context=context)
 
 def category(request, cat_id):
     posts = Forum.objects.filter(pk=cat_id)
-    cats = Category_forum.objects.all()
     context = {
         'title': 'Категории',
         'menu': menu,
-        'cats': cats,
         'posts': posts,
         'cat_selected': cat_id
     }
-    return render(request, 'forum/show_category.html', context)
+    return render(request, 'forum/forum.html', context)

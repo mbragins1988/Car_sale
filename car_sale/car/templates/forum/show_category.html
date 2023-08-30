@@ -1,21 +1,7 @@
-{% extends 'base.html' %}
-{% block title %}
-	{{ title }}
-{% endblock %}
-{% block content %}
-	<div class="features">
-		<h1>{{ title }}</h1>
-		{% if posts %}
-			{% for post in posts %}
-					<div class="alert alert-warning">
-					<h3>Тема {{ post.title }}</h3>
-					<p> {{ post.text|linebreaks|truncatewords:50 }} </p>
-					{% comment %} <a href='{% url "car:detail_car" car.id %}' class="btn btn-warning">Читать</a> {% endcomment %}
-					{% comment %} <a href="{{ car.get_absolute_url }}" class="btn btn-warning">Читать</a> {% endcomment %}
-					</div>
-			{% endfor %}
-		{% else %}
-				На данный момент нет объявлений
-		{% endif %}
-	</div>
-{% endblock %}
+{% for cat in cats %}
+	{% if cat.id == cat_selected %}
+		<a ><li><span class="selected"> {{ cat.name }} </span></li></a>
+	{% else %}
+		<a href="{{ cat.get_absolute_url }}"><li><i class="fa-solid fa-car-side"></i> {{ cat.name }} </li></a>
+	{% endif %}
+{% endfor %}

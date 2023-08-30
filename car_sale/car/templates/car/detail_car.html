@@ -5,8 +5,10 @@
 {% block content %}
 	<div class="features">
 		<h1>Автомобиль {{ car.brand }} {{ car.model }}</h1>
-		<p> {{ car.text }} </p>
-		<p> {{ car.photo }} </p>
+		{% if car.photo %}
+			<img src="{{car.photo.url}}">
+		{% endif %}
+		<p> {{ car.text|linebreaks }} </p>
 		{% comment %} <a href="{% url 'update_car' car.id %}"><button class="btn btn-info">изменить</button></a>
 		<a href="{% url 'delete_car' car.id %}"><button class="btn btn-danger">удалить</button></a> {% endcomment %}
 	</div>

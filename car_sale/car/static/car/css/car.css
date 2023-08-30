@@ -52,13 +52,18 @@ aside ul li {
     transition: transform .5s ease;
 }
 
+p img.picture_img {
+	max-width: 200px;
+	height: auto;
+}
+
 .selected {
     color: #6161c3;
     font-size: 1.2rem;
 }
 
 aside ul li:hover, aside ul a:hover {
-    color: #6161c3;
+    color: #ffffff;
     text-decoration: none;
     transform: scale(1.2);
 }
@@ -97,15 +102,9 @@ main .features p {
 
 div.alert alert-warning p.first {
     margin: 0;
-    float: left;
-}
-
-div.alert alert-warning p.last {
-    margin: 0;
     float: right;
 }
-
-div.alert alert-warning p.last {
+div.features div.alert alert-warning p.last {
     margin: 0;
     float: right;
 }

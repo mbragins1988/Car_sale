@@ -10,9 +10,12 @@
 			{% for car in cars %}
 					<div class="alert alert-warning">
 					<p class "first">Дата объявления: {{ car.time_create|date:'d-m-Y' }}</p>
-					<h3>Автомобиль {{ car.brand }} {{ car.model }}</h3>
+					<p class "date">Год выпуска {{ car.date }}</p>
+					<h3>Автомобиль {{ car.brand }} {{ car.model }}</h3>		
+					{% if car.photo %}
+						<p><img class="picture_img" src="{{car.photo.url}}">
+					{% endif %}
 					<p> {{ car.text|linebreaks|truncatewords:50 }} </p>
-					{% comment %} <a href='{% url "car:detail_car" car.id %}' class="btn btn-warning">Читать</a> {% endcomment %}
 					<a href="{{ car.get_absolute_url }}" class="btn btn-warning">Читать</a>
 					</div>
 			{% endfor %}
@@ -20,23 +23,4 @@
 				На данный момент нет объявлений
 		{% endif %}
 	</div>
-
-
-		{% comment %} <div class="features">
-			<h1>{{ title }}</h1>
-			{% for car in cars %}
-				{% if car %}
-					<div class="alert alert-warning">
-						<h3>Автомобиль {{ car.brand }} {{ car.model }}</h3>
-						<p> {{ car.text }} </p>
-						<a href="{% url 'detail_car' car.id %}" class="btn btn-warning">Читать</a>
-					</div>
-				{% else %}
-				<div class="features">
-					<h1>{{ title }}</h1>
-					<p>На данный момент нет объявлений</p>
-				</div>
-				{% endif %}
-			{% endfor %}
-		</div> {% endcomment %}
 {% endblock %}

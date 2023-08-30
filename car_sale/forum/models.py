@@ -18,22 +18,30 @@ class Forum(models.Model):
     cat = models.ForeignKey('Category_forum', on_delete=models.PROTECT)
 
     def get_absolute_url(self):
-        return reverse('forum:post_detail', kwargs={'post_id': self.id})
+        return reverse('forum:post_detail', kwargs={'post_slug': self.slug})
     
     def __str__(self):
         return self.title
+    
+    class Meta:
+        verbose_name = 'Форум'
+        verbose_name_plural = 'Форум'
 
 
 class Category_forum(models.Model):
     name = models.CharField(
-        max_length=100, db_index=True, verbose_name='тип автомобиля'
+        max_length=100, db_index=True, verbose_name='название темы'
     )
     slug = models.SlugField(
         max_length=255, unique=True, db_index=True, verbose_name="url"
         )
 
     def get_absolute_url(self):
-        return reverse('forum:category', kwargs={'cat_id': self.id})
+        return reverse('forum:category', kwargs={'cat_slug': self.slug})
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = 'Категория форума'
+        verbose_name_plural = 'Категории форума'

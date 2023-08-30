@@ -29,12 +29,14 @@ menu = [
 #     form_class = CarForm 
 
 
-def detail_car(request, car_id):
-    car = get_object_or_404(Car, pk=car_id)
+def detail_car(request, car_slug):
+    car = get_object_or_404(Car, slug=car_slug)
     context = {
         'title': 'объявление',
         'menu': menu,
         'car': car,
+        'cat_selected': car.cat_id,
+        'flag_car': 'car',
     }
     return render(request, 'car/detail_car.html', context=context)
 
@@ -57,7 +59,8 @@ def index(request):
         'title': 'Объявления',
         'cars': cars,
         'menu': menu,
-        'cat_selected': 0
+        'cat_selected': 0,
+        'flag_car': 'car',
     }
     return render(request, 'car/index.html', context=context)
 
@@ -66,6 +69,7 @@ def about(request):
     context = {
         'title': 'Что такое CarSale',
         'menu': menu,
+        'flag_car': 'car',
     }
     return render(request, 'car/about.html', context=context)
 
@@ -84,6 +88,7 @@ def add(request):
         'form': form,
         'error': error,
         'menu': menu,
+        'flag_car': 'car',
     }
     return render(request, 'car/add.html', context=context)
 
@@ -92,6 +97,7 @@ def contacts(request):
     context = {
         'title': 'Контакты',
         'menu': menu,
+        'flag_car': 'car',
     }
     return render(request, 'car/contacts.html', context=context)
 
@@ -99,16 +105,18 @@ def login(request):
     context = {
         'title': 'Регистрация',
         'menu': menu,
+        'flag_car': 'car',
     }
     return render(request, 'register/login.html', context=context)
 
-def category(request, cat_id):
-    cars=Car.objects.filter(cat=cat_id)
+def category(request, cat_slug):
+    cars=Car.objects.filter(cat__slug=cat_slug)
     context = {
         'title': 'Категории',
         'menu': menu,
         'cars': cars,
-        'cat_selected': cat_id,
+        'cat_selected': cat_slug,
+        'flag_car': 'car',
     }
     return render(request, 'car/index.html', context=context)
 

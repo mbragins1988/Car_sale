@@ -30,7 +30,7 @@ class Car(models.Model):
     cat = models.ForeignKey('Category_car', on_delete=models.PROTECT)
 
     def get_absolute_url(self):
-        return reverse('car:detail_car', kwargs={'car_id': self.id})
+        return reverse('car:detail_car', kwargs={'car_slug': self.slug})
 
     def __str__(self):
         return self.brand
@@ -48,7 +48,7 @@ class Category_car(models.Model):
         )
 
     def get_absolute_url(self):
-        return reverse('car:category', kwargs={'cat_id': self.id})
+        return reverse('car:category', kwargs={'cat_slug': self.slug})
 
     def __str__(self):
         return self.name

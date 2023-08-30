@@ -18,25 +18,29 @@ def forum(request):
         'menu': menu,
         'posts': posts,
         'cat_selected': 0,
+        'flag_post': 'post',
     }
     return render(request, 'forum/forum.html', context)
 
 
-def post_detail(request, post_id):
-    post = get_object_or_404(Forum, pk=post_id)
+def post_detail(request, post_slug):
+    post = get_object_or_404(Forum, slug=post_slug)
     context = {
-        'title': 'Форум',
+        'title': 'Форум сообщества Car sale',
         'menu': menu,
         'post': post,
+        'cat_selected': post_slug,
+        'flag_post': 'post',
     }
     return render(request, 'forum/detail_post.html', context=context)
 
-def category(request, cat_id):
-    posts = Forum.objects.filter(pk=cat_id)
+def category(request, cat_slug):
+    posts = Forum.objects.filter(cat__slug=cat_slug)
     context = {
-        'title': 'Категории',
+        'title': 'Форум',
         'menu': menu,
         'posts': posts,
-        'cat_selected': cat_id
+        'cat_selected': cat_slug,
+        'flag_post': 'post',
     }
     return render(request, 'forum/forum.html', context)

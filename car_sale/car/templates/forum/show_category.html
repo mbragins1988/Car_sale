@@ -1,5 +1,5 @@
 {% for cat in cats %}
-	{% if cat.id == cat_selected %}
+	{% if cat.slug == cat_selected %}
 		<a ><li><span class="selected"> {{ cat.name }} </span></li></a>
 	{% else %}
 		<a href="{{ cat.get_absolute_url }}"><li><i class="fa-solid fa-car-side"></i> {{ cat.name }} </li></a>

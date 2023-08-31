@@ -3,19 +3,16 @@
       {{ title }}
 {% endblock %}
 {% block content %}
-	<div class="features">
-	      <h1>Добавить автомобиль</h1>
-            <form method="post">
+<div class="features">
+      <h1>{{ title }}</h1>
+      <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.brand }}<br>
-            {{ form.model }}<br>
-            {{ form.date }}<br>
-            {{ form.price }}<br>
-            {{ form.number_owners }}<br>
-            {{ form.text }}<br>
-            {% comment %} {{ form.photo }}<br> {% endcomment %}
-            <span>{{ error }}</span>
-            <button class="btn btn-success" type="submit"> Добавить автомобиль</button>
-            </form>
-	</div>
+            <div class="form-error">{{ form.non_field_errors }}</div>
+            {% for f in form %}
+                  <p>{{ f }}</p>
+                  <div class="form-error">{{ f.errors }}</div>
+            {% endfor %}
+            <button class="btn btn-success" type="submit"> Добавить объявление</button> 
+      </form>
+</div>
 {% endblock %}

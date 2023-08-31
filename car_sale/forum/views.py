@@ -9,6 +9,7 @@ from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from car.views import menu
 from forum.models import *
+from forum.forms import *
 
 
 def forum(request):
@@ -34,6 +35,7 @@ def post_detail(request, post_slug):
     }
     return render(request, 'forum/detail_post.html', context=context)
 
+
 def category(request, cat_slug):
     posts = Forum.objects.filter(cat__slug=cat_slug)
     context = {
@@ -44,3 +46,21 @@ def category(request, cat_slug):
         'flag_post': 'post',
     }
     return render(request, 'forum/forum.html', context)
+
+
+def add_post(request):
+    if request.method == "POST":
+        form = AddPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('forum:forum')
+    else:
+        form = AddPostForm()
+
+    context = {
+        'title': 'Добавить пост',
+        'menu': menu,
+        'flag_post': 'post',
+        'form': form,
+    }
+    return render(request, 'forum/add_post.html', context=context)

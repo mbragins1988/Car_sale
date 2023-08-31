@@ -180,3 +180,9 @@ ul.mainmenu li a {
 ul.mainmenu li a:hover {
 	color: #FDA83D;
 }
+
+.form-error {
+    list-style: none;
+    padding: 0;
+    color: #FDA83D;
+}

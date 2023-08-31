@@ -74,19 +74,17 @@ def about(request):
     return render(request, 'car/about.html', context=context)
 
 def add(request):
-    error = ''
     if request.method == 'POST':
-        form = CarForm(request.POST)
+        form = CarForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect ('car:home')
-        else:
-            error = 'Неправильно введены данные'
-    form = CarForm
+            return redirect('car:home')
+    else:
+        form = CarForm()
+        
     context = {
         'title': 'Добавление автомобиля',
         'form': form,
-        'error': error,
         'menu': menu,
         'flag_car': 'car',
     }

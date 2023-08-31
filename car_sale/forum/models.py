@@ -9,7 +9,7 @@ class Forum(models.Model):
         )
     text = models.TextField(max_length=2000, verbose_name='текс поста')
     photo = models.ImageField(
-        upload_to="photos/%Y/%m/%d/", verbose_name='фото автомобиля',
+        upload_to="photos/%Y/%m/%d/", verbose_name='фото',
         blank=True,
     )
     time_create = models.DateTimeField(auto_now_add=True, null=True)

@@ -18,8 +18,6 @@
 		<div class="header">
 			<ul id="mainmenu" class="mainmenu">
             <li class="logo"><a href="{% url 'car:home' %}"><div class="logo"></div></a></li>
-            {% comment %} <a href="{% url 'car:home' %}" class='logo'>CarSale</a> {% endcomment %}
-			{% comment %} <li class="logo"><a href="{% url 'car:home' %}"><div class="logo"></div></a></li> {% endcomment %}
             {% menu menu=menu %}
                     </ul>
                     <div class="clear"></div>
@@ -35,7 +33,7 @@
                         <a href="{% url 'forum:forum' %}"><li><i class="fa-solid fa-car-side"></i> Все категории </li></a>
                     {% endif %}
                     {% show_categories 'name' cat_selected %}
-                    <a href="{% url 'car:add' %}"><li><button class="btn btn-info">Добавить пост</li></a>
+                    <a href="{% url 'forum:add_post' %}"><li><button class="btn btn-info">Добавить пост</li></a>
 
                 {% elif flag_car %}
                     {% if cat_selected == 0 %}
@@ -44,7 +42,7 @@
                         <a href="{% url 'car:home' %}"><li><i class="fa-solid fa-car-side"></i> Все категории </li></a>
                     {% endif %}
                     {% categories_car  'name' cat_selected %}
-                    <a href="{% url 'car:add' %}"><li><button class="btn btn-info">Добавить обхявление</li></a>
+                    <a href="{% url 'car:add' %}"><li><button class="btn btn-info">Добавить объявление</li></a>
                 {% endif %}
                 
             </ul>

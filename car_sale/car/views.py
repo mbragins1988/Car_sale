@@ -11,22 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from car.forms import *
 from car.models import *
-
-menu = [
-    {'title': 'Объявления', 'url_name': 'car:home'},
-    {'title': 'Форум', 'url_name': 'forum:forum'},
-    {'title': 'О сайте', 'url_name': 'car:about'},
-    {'title': 'Обратная связь', 'url_name': 'car:contacts'},
-    {'title': 'Контакты', 'url_name': 'car:contacts'},
-    {'title': 'Войти', 'url_name': 'car:login'},
-    ]
-
-# class CarUpdateView(UpdateView):
-#     model = Car
-#     template_name = 'car/add.html'
-#     context_object_name = 'car'
-
-#     form_class = CarForm 
+from forum.utils import menu
 
 
 def detail_car(request, car_slug):
@@ -40,11 +25,6 @@ def detail_car(request, car_slug):
     }
     return render(request, 'car/detail_car.html', context=context)
 
-# class CarView(DetailView):
-#     model = Car
-#     template_name = 'car/detail_car.html'
-#     context_object_name = 'car'
-
 
 # class CarDeleteView(DeleteView):
 #     model = Car
@@ -55,9 +35,13 @@ def detail_car(request, car_slug):
 
 def index(request):
     cars = Car.objects.all()
+    paginator = Paginator(cars, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'title': 'Объявления',
         'cars': cars,
+        'page_obj': page_obj,
         'menu': menu,
         'cat_selected': 0,
         'flag_car': 'car',
@@ -73,6 +57,8 @@ def about(request):
     }
     return render(request, 'car/about.html', context=context)
 
+
+@login_required
 def add(request):
     if request.method == 'POST':
         form = CarForm(request.POST, request.FILES)
@@ -98,6 +84,7 @@ def contacts(request):
         'flag_car': 'car',
     }
     return render(request, 'car/contacts.html', context=context)
+
 
 def login(request):
     context = {

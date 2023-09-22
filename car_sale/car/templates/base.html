@@ -33,7 +33,9 @@
                         <a href="{% url 'forum:forum' %}"><li><i class="fa-solid fa-car-side"></i> Все категории </li></a>
                     {% endif %}
                     {% show_categories 'name' cat_selected %}
-                    <a href="{% url 'forum:add_post' %}"><li><button class="btn btn-info">Добавить пост</li></a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'forum:add_post' %}"><li><button class="btn btn-info">Добавить пост</li></a>
+                    {% endif %}
 
                 {% elif flag_car %}
                     {% if cat_selected == 0 %}
@@ -42,7 +44,9 @@
                         <a href="{% url 'car:home' %}"><li><i class="fa-solid fa-car-side"></i> Все категории </li></a>
                     {% endif %}
                     {% categories_car  'name' cat_selected %}
-                    <a href="{% url 'car:add' %}"><li><button class="btn btn-info">Добавить объявление</li></a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'car:add' %}"><li><button class="btn btn-info">Добавить объявление</li></a>
+                    {% endif %}
                 {% endif %}
                 
             </ul>
@@ -50,6 +54,19 @@
     <main>
         {% block content %}
         {% endblock %}
+        <nav class="list-pages">
+          <ul>
+            {% for p in paginator.page_range %}
+              {% if page_obj.number == p %}
+                <li class="page-num page-num-selected">{{ p }}</li>
+              {% else %}
+               <li class="page-num">
+                  <a href="?page={{ p }}">{{ p }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
     </main>
     <tr><td valign=top>
         <div id="footer">

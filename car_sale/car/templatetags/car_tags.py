@@ -13,7 +13,7 @@ def show_categories(sort=None, cat_selected=0):
     
     return {'cats': cats, 'cat_selected': cat_selected}
 
-@register.inclusion_tag('car/categories_car.html')
+@register.inclusion_tag('forum/categories_car.html')
 def categories_car(sort=None, cat_selected=0):
     if not sort:
         cats = Category_car.objects.all()

@@ -1,17 +1,18 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.views.decorators.cache import cache_page
 
 from car.forms import *
 from car.models import *
-from forum.utils import menu
+from forum.utils import *
 
 
 def detail_car(request, car_slug):
@@ -26,21 +27,14 @@ def detail_car(request, car_slug):
     return render(request, 'car/detail_car.html', context=context)
 
 
-# class CarDeleteView(DeleteView):
-#     model = Car
-#     template_name = 'car/delete_car.html'
-#     context_object_name = 'car'
-#     success_url = '/car/'
-
-
+@cache_page(60) 
 def index(request):
     cars = Car.objects.all()
-    paginator = Paginator(cars, 3)
+    paginator = Paginator(cars, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
         'title': 'Объявления',
-        'cars': cars,
         'page_obj': page_obj,
         'menu': menu,
         'cat_selected': 0,
@@ -69,7 +63,7 @@ def add(request):
         form = CarForm()
         
     context = {
-        'title': 'Добавление автомобиля',
+        'title': 'Добавить автомобиль',
         'form': form,
         'menu': menu,
         'flag_car': 'car',
@@ -86,20 +80,48 @@ def contacts(request):
     return render(request, 'car/contacts.html', context=context)
 
 
-def login(request):
-    context = {
-        'title': 'Регистрация',
-        'menu': menu,
-        'flag_car': 'car',
-    }
-    return render(request, 'register/login.html', context=context)
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'register/login.html'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Авторизация')
+        return dict(list(context.items()) + list(c_def.items()))
+    
+    def get_success_url(self):
+        return reverse_lazy('car:home')
+    
+def logout_user(request):
+    logout(request)
+    return redirect('car:login')
+
+
+class RegisterUser(DataMixin, CreateView):
+    form_class = RegisterUserForm
+    template_name = 'register/register.html'
+    success_url = reverse_lazy('car:login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Регистрация')
+        return dict(list(context.items()) + list(c_def.items()))
+    
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('car:home')
+
+@cache_page(60)
 def category(request, cat_slug):
-    cars=Car.objects.filter(cat__slug=cat_slug)
+    cars = Car.objects.filter(cat__slug=cat_slug)
+    paginator = Paginator(cars, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'title': 'Категории',
         'menu': menu,
-        'cars': cars,
+        'page_obj': page_obj,
         'cat_selected': cat_slug,
         'flag_car': 'car',
     }

@@ -38,7 +38,7 @@ class Car(models.Model):
     class Meta:
         verbose_name = 'Машина'
         verbose_name_plural = 'Машины'
-        ordering = ('time_create', 'price')
+        ordering = ('-time_create', 'id')
 
 
 class Category_car(models.Model):

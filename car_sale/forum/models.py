@@ -26,6 +26,7 @@ class Forum(models.Model):
     class Meta:
         verbose_name = 'Форум'
         verbose_name_plural = 'Форум'
+        ordering = ('-time_create', 'id')
 
 
 class Category_forum(models.Model):

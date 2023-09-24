@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
 from django.db.models.query import QuerySet
+from django.views.generic.edit import FormView
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -25,6 +26,9 @@ class ForumHome(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Главная страница')
         return dict(list(context.items()) + list(c_def.items()))
+    
+    def get_queryset(self):
+        return Forum.objects.all().select_related('cat')
 
 
 class PostDetail(DataMixin, DetailView):
@@ -32,6 +36,9 @@ class PostDetail(DataMixin, DetailView):
     template_name = 'forum/detail_post.html'
     slug_url_kwarg = 'post_slug'
     context_object_name = 'post'
+
+    def get_queryset(self):
+        return Forum.objects.all().select_related('cat')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,12 +53,13 @@ class PostCategory(DataMixin, ListView):
     allow_empty = False
 
     def get_queryset(self):
-        return Forum.objects.filter(cat__slug=self.kwargs['cat_slug'])
+        return Forum.objects.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Категория - ' + str(context['posts'][0].cat),
-                                      cat_selected = context['posts'][0].cat.slug)
+        c = Category_forum.objects.get(slug=self.kwargs['cat_slug'])
+        c_def = self.get_user_context(title='Категория - ' + c.name,
+                                      cat_selected=c.slug)
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -65,3 +73,18 @@ class AddPost(LoginRequiredMixin, DataMixin, CreateView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Добавить пост', cat_selected = None)
         return dict(list(context.items()) + list(c_def.items()))
+
+
+class FeedbackFormView(DataMixin, FormView):
+    form_class = ContactForm
+    template_name = 'forum/contact.html'
+    success_url = reverse_lazy('forum:forum')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Обратная связь')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return redirect('forum:forum')

@@ -1,5 +1,7 @@
-from django.forms import DateTimeInput, ModelForm, Textarea, TextInput
+from django.forms import CharField, DateTimeInput, EmailField, ModelForm, Textarea, TextInput, PasswordInput, EmailInput
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
 
 from car.models import *
 
@@ -51,3 +53,23 @@ class CarForm(ModelForm):
         if len(brand) > 100:
             raise ValidationError('Длина превышает допустимую')
         return brand
+
+
+class RegisterUserForm(UserCreationForm):
+    username = CharField(label='Логин', widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите логин'}))
+    email = EmailField(label='Email', widget=EmailInput(attrs={'class': 'form-control', 'placeholder': 'Введите email'}))
+    password1 = CharField(label='Пароль', widget=PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Введите пароль'}))
+    password2 = CharField(label='Повтор пароля', widget=PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Повторите пароль'}))
+ 
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+
+class LoginUserForm(AuthenticationForm):
+    username = CharField(label='Логин', widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите логин'}))
+    password = CharField(label='Пароль', widget=PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Введите пароль'}))
+ 
+    class Meta:
+        model = User
+        fields = ("username", "password")

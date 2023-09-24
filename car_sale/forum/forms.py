@@ -1,4 +1,4 @@
-from django import forms 
+from django import forms
 from forum.models import *
 from django.core.exceptions import ValidationError
 
@@ -33,3 +33,8 @@ class AddPostForm(forms.ModelForm):
         if len(title) > 100:
             raise ValidationError('Длина превышает допустимую')
         return title
+    
+class ContactForm(forms.Form):
+    name = forms.CharField(label='Имя', max_length=255)
+    email = forms.EmailField(label='Email')
+    content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))

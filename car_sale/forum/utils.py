@@ -1,5 +1,5 @@
-from forum.models import *
 from django.db.models import Count
+from forum.models import *
 
 menu = [
     {'title': 'Объявления', 'url_name': 'car:home'},

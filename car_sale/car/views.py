@@ -1,17 +1,16 @@
-from django.contrib.auth import logout, login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
-from django.contrib.auth.forms import AuthenticationForm
-from django.core.paginator import Paginator
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
-from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.decorators.cache import cache_page
-
 from car.forms import *
 from car.models import *
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
+from django.views.decorators.cache import cache_page
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from forum.utils import *
 from forum.utils import DataMixin
 

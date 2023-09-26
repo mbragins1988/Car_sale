@@ -1,18 +1,20 @@
 from collections import Counter
 from typing import Any, Dict
-from django.contrib.auth import logout, login
+
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
 from django.db.models.query import QuerySet
-from django.views.generic.edit import FormView
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, DetailView, CreateView, UpdateView, ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from forum.models import *
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
+from django.views.generic.edit import FormView
 from forum.forms import *
+from forum.models import *
 from forum.utils import *
 
 

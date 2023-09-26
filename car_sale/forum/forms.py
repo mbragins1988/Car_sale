@@ -1,7 +1,7 @@
-from django import forms
-from forum.models import *
-from django.core.exceptions import ValidationError
 from captcha.fields import CaptchaField
+from django import forms
+from django.core.exceptions import ValidationError
+from forum.models import *
 
 
 class AddPostForm(forms.ModelForm):

@@ -1,9 +1,9 @@
-from django.forms import CharField, DateTimeInput, EmailField, ModelForm, Textarea, TextInput, PasswordInput, EmailInput
-from django.core.exceptions import ValidationError
+from car.models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-
-from car.models import *
+from django.core.exceptions import ValidationError
+from django.forms import (CharField, DateTimeInput, EmailField, EmailInput,
+                          ModelForm, PasswordInput, Textarea, TextInput)
 
 
 class CarForm(ModelForm):

@@ -6,6 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('captcha/', include('captcha.urls')),
     path('car/', include('car.urls', namespace='car')),
     path('forum/', include('forum.urls', namespace='forum')),
 ]

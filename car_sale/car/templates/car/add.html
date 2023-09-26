@@ -7,12 +7,16 @@
       <h1>{{ title }}</h1>
       <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-error">{{ form.non_field_errors }}</div>
+                  <div class="form-error">{{ form.non_field_errors }}</div>
             {% for f in form %}
                   <p>{{ f }}</p>
                   <div class="form-error">{{ f.errors }}</div>
             {% endfor %}
-            <button class="btn btn-success" type="submit"> Добавить объявление</button> 
+            {% if title == 'Изменить объявление' %}
+                  <button class="btn btn-success" type="submit"> Изменить объявление</button>
+            {% else %}
+                  <button class="btn btn-success" type="submit"> Добавить объявление</button> 
+            {% endif %}
       </form>
 </div>
 {% endblock %}

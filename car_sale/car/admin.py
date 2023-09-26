@@ -4,7 +4,7 @@ from car.models import *
 
 class CarAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'brand', 'model', 'time_create', 'price', 'is_published'
+        'id', 'slug', 'brand', 'model', 'time_create', 'price', 'is_published'
         )
     list_display_links = ('id', 'brand', 'model')
     search_fields = ('brand', 'price ')

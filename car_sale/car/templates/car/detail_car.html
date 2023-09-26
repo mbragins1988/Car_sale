@@ -6,10 +6,10 @@
 	<div class="features">
 		<h1>Автомобиль {{ car.brand }} {{ car.model }}</h1>
 		{% if car.photo %}
-			<img src="{{car.photo.url}}">
+		  <img src="{{car.photo.url}}">
 		{% endif %}
 		<p> {{ car.text|linebreaks }} </p>
-		{% comment %} <a href="{% url 'update_car' car.id %}"><button class="btn btn-info">изменить</button></a>
-		<a href="{% url 'delete_car' car.id %}"><button class="btn btn-danger">удалить</button></a> {% endcomment %}
+		<a href="{% url 'car:update_car' car.slug %}"><button class="btn btn-info">изменить</button></a>
+		<a href="{% url 'car:delete_car' car.slug %}"><button class="btn btn-danger">удалить</button></a>
 	</div>
 {% endblock %}

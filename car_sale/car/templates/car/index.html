@@ -3,12 +3,11 @@
 	{{ title }}
 {% endblock %}
 {% block content %}
-
 	<div class="features">
 		<h1>{{ title }}</h1>
 		{% if page_obj %}
 			{% for car in page_obj %}
-					<div class="alert alert-warning">
+				<div class="alert alert-warning">
 					<p class "first">Дата объявления: {{ car.time_create|date:'d-m-Y' }}</p>
 					<p class "date">Год выпуска {{ car.date }}</p>
 					<h3>Автомобиль {{ car.brand }} {{ car.model }}</h3>		
@@ -17,10 +16,10 @@
 					{% endif %}
 					<p> {{ car.text|linebreaks|truncatewords:50 }} </p>
 					<a href="{{ car.get_absolute_url }}" class="btn btn-warning">Читать</a>
-					</div>
+				</div>
 			{% endfor %}
 		{% else %}
-				На данный момент нет объявлений
+			На данный момент нет объявлений
 		{% endif %}
 	</div>
 {% endblock %}

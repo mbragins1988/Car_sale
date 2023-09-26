@@ -12,11 +12,7 @@
                         <p>{{ f }}</p>
                         <div class="form-error">{{ f.errors }}</div>
                   {% endfor %}
-                  {% if title == 'Изменить пост'%}
-                        <button class="btn btn-success" type="submit"> Изменить пост</button> 
-                  {% else %}
-                        <button class="btn btn-success" type="submit"> Добавить пост</button>
-                  {% endif %}
+                  <button class="btn btn-success" type="submit"> Отправить</button> 
             </form>
 	</div>
 {% endblock %}

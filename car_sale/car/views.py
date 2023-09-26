@@ -13,6 +13,7 @@ from django.views.decorators.cache import cache_page
 from car.forms import *
 from car.models import *
 from forum.utils import *
+from forum.utils import DataMixin
 
 
 def detail_car(request, car_slug):
@@ -22,12 +23,11 @@ def detail_car(request, car_slug):
         'menu': menu,
         'car': car,
         'cat_selected': car.cat_id,
-        'flag_car': 'car',
     }
     return render(request, 'car/detail_car.html', context=context)
 
 
-@cache_page(60) 
+# @cache_page(60) 
 def index(request):
     cars = Car.objects.all()
     paginator = Paginator(cars, 10)
@@ -38,7 +38,6 @@ def index(request):
         'page_obj': page_obj,
         'menu': menu,
         'cat_selected': 0,
-        'flag_car': 'car',
     }
     return render(request, 'car/index.html', context=context)
 
@@ -47,7 +46,7 @@ def about(request):
     context = {
         'title': 'Что такое CarSale',
         'menu': menu,
-        'flag_car': 'car',
+        'button': 'without_button'
     }
     return render(request, 'car/about.html', context=context)
 
@@ -66,16 +65,37 @@ def add(request):
         'title': 'Добавить автомобиль',
         'form': form,
         'menu': menu,
-        'flag_car': 'car',
     }
     return render(request, 'car/add.html', context=context)
 
+
+class CarUpdateView(DataMixin, UpdateView):
+    model = Car
+    template_name = 'car/add.html'
+    form_class = CarForm
+    slug_url_kwarg = 'car_slug'
+ 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменить объявление', cat_selected = None)
+        return dict(list(context.items()) + list(c_def.items()))
+
+class CarDeleteView(DataMixin, DeleteView):
+    model = Car
+    template_name = 'car/delete_car.html'
+    slug_url_kwarg = 'car_slug'
+    success_url = reverse_lazy('car:home')
+ 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Удалить объявление', cat_selected = None)
+        return dict(list(context.items()) + list(c_def.items()))
 
 def contacts(request):
     context = {
         'title': 'Контакты',
         'menu': menu,
-        'flag_car': 'car',
+        'button': 'without_button'
     }
     return render(request, 'car/contacts.html', context=context)
 
@@ -112,18 +132,18 @@ class RegisterUser(DataMixin, CreateView):
         login(self.request, user)
         return redirect('car:home')
 
-@cache_page(60)
+# @cache_page(60)
 def category(request, cat_slug):
     cars = Car.objects.filter(cat__slug=cat_slug)
     paginator = Paginator(cars, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
-        'title': 'Категории',
+        'title': 'Категории объявлений',
         'menu': menu,
         'page_obj': page_obj,
         'cat_selected': cat_slug,
-        'flag_car': 'car',
+        'flag': 1,
     }
     return render(request, 'car/index.html', context=context)
 

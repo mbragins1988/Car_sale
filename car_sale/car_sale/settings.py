@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'car.apps.CarConfig',
     'forum.apps.ForumConfig',
     'debug_toolbar',
+    'captcha',
 ]
 
 MIDDLEWARE = [

@@ -24,25 +24,50 @@ class ForumHome(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Главная страница')
+        c_def = self.get_user_context(title='Форум')
         return dict(list(context.items()) + list(c_def.items()))
     
     def get_queryset(self):
         return Forum.objects.all().select_related('cat')
+    
+class ForumUpdateView(DataMixin, UpdateView):
+    model = Forum
+    template_name = 'forum/add_post.html'
+    form_class = AddPostForm
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'posts'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменить пост', cat_selected = None)
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class ForumDeleteView(DataMixin, DeleteView):
+    model = Forum
+    template_name = 'forum/delete_post.html'
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'posts'
+    success_url = reverse_lazy('forum:forum')
+ 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Удалить пост', cat_selected = None)
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 class PostDetail(DataMixin, DetailView):
     model = Forum
     template_name = 'forum/detail_post.html'
     slug_url_kwarg = 'post_slug'
-    context_object_name = 'post'
+    context_object_name = 'posts'
 
     def get_queryset(self):
         return Forum.objects.all().select_related('cat')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title=context['post'])
+        c_def = self.get_user_context(title=context['posts'])
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -58,7 +83,7 @@ class PostCategory(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c = Category_forum.objects.get(slug=self.kwargs['cat_slug'])
-        c_def = self.get_user_context(title='Категория - ' + c.name,
+        c_def = self.get_user_context(title='Форум - ' + c.name,
                                       cat_selected=c.slug)
         return dict(list(context.items()) + list(c_def.items()))
 
@@ -71,18 +96,18 @@ class AddPost(LoginRequiredMixin, DataMixin, CreateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Добавить пост', cat_selected = None)
+        c_def = self.get_user_context(title='Добавить пост', cat_selected = None, posts='posts')
         return dict(list(context.items()) + list(c_def.items()))
 
 
 class FeedbackFormView(DataMixin, FormView):
     form_class = ContactForm
-    template_name = 'forum/contact.html'
+    template_name = 'forum/feedback.html'
     success_url = reverse_lazy('forum:forum')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Обратная связь')
+        c_def = self.get_user_context(title='Обратная связь', cat_selected = None, button='without_button')
         return dict(list(context.items()) + list(c_def.items()))
 
     def form_valid(self, form):
